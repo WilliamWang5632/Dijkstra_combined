@@ -24,6 +24,9 @@ public:
 
         nodeArray = new Node[1];
         nodeArray[0] = Node(1,1);
+
+        directions = new char[nNodes - 1];
+        vehicleInstructions = new char[nNodes];
     }
 
     /**
@@ -40,10 +43,13 @@ public:
 
         nodeArray = new Node[1];
         nodeArray[0] = startingPoint;
+
+        directions = new char[nNodes - 1];
+        vehicleInstructions = new char[nNodes];
     }
 
     // print the ids of all nodes in path in order as well as the totalCost
-    void print(bool isId){
+    void printPath(bool isId){
         if (isId){
             cout << "The shortest path between node " << start.id << " and "<< current.id << " is: " << endl;
 
@@ -71,11 +77,55 @@ public:
         cout << "Total cost of this path: " << totalCost << endl;
         cout << endl;
     }
+
+    void findDirections(){
+        cout << nNodes <<endl;
+        for (int i = 1; i < nNodes; i++){
+
+            int previous = nodeArray[i - 1].id;
+            int current = nodeArray[i].id;
+
+            if (previous - current == -1){
+                directions[i - 1] = 'E';
+
+                cout << "East -> ";
+            }
+            else if (previous - current == 1){
+                directions[i - 1] = 'W';
+                cout << "West -> ";
+            }
+            else if (previous - current == -7){
+                directions[i - 1] = 'S';
+                cout << "South -> ";
+            }
+            else if (previous - current == 7){
+                directions[i - 1] = 'N';
+                cout << "North -> ";
+            }
+            else{
+                //directions[i] = '-';
+            }
+        }
+        cout << "end" << endl;
+    }
+
+    void findVehicleInstructions(){
+
+    }
     
-    ~Path(){} 
+    ~Path() {
+        //delete[] nodeArray;
+        //delete[] directions;
+        //delete[] instructions;
+    }
+
 
     int nNodes;
     int totalCost;
+
+    char* directions;
+    char* vehicleInstructions;
+
     Node start;
     Node current;
     Node* nodeArray;

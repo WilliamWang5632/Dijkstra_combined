@@ -63,9 +63,11 @@ int main()
     // print(true) -> identifier
     // print(false) -> coordinates
 
-    minimumCostPath.print(true);
+    minimumCostPath.printPath(true);
     cout << separationLine << endl;
-    minimumCostPath.print(false);
+    minimumCostPath.printPath(false);
+
+    minimumCostPath.findDirections();
 
 }
 
