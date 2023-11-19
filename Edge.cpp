@@ -17,26 +17,40 @@ public:
     @param node2 second node connected to the edge
      */
     Edge(int weightColor, Node& node1, Node& node2){
-        weight = weightColor;
-        adjacentNodes[0] = &node1;
-        adjacentNodes[1] = &node2;
+        weight_ = weightColor;
+        adjacentNodes_[0] = &node1;
+        adjacentNodes_[1] = &node2;
     }
 
     /*
-    prints the weight as well as information of both connected nodes
+    prints the weight_ as well as information of both connected nodes
     */
     void printInfo(){
-        cout << "weight: " << weight << endl;
+        cout << "weight: " << weight_ << endl;
         cout << "Node 1: " << endl;
-        cout << "\t id: " << adjacentNodes[0]->id << endl;
-        cout << "\t coordinates: (" << adjacentNodes[0] -> x_position;
-        cout << ", " << adjacentNodes[0] -> y_position << ")" << endl;
+        cout << "\t id: " << adjacentNodes_[0]->getId() << endl;
+        cout << "\t coordinates: (" << adjacentNodes_[0] -> getX();
+        cout << ", " << adjacentNodes_[0] -> getY() << ")" << endl;
         cout << "Node 2: " << endl;
-        cout << "\t id: " << adjacentNodes[1]->id << endl;
-        cout << "\t coordinates: (" << adjacentNodes[1] -> x_position;
-        cout << ", " << adjacentNodes[1] -> y_position << ")" << endl;
+        cout << "\t id: " << adjacentNodes_[1]->getId() << endl;
+        cout << "\t coordinates: (" << adjacentNodes_[1] -> getX();
+        cout << ", " << adjacentNodes_[1] -> getY() << ")" << endl;
     }
 
-    int weight;
-    Node* adjacentNodes[2];
+    //getters
+    const int getWeight() const{
+        return weight_;
+    }
+
+    const Node* getAdjNode1() const{
+        return adjacentNodes_[0];
+    }
+
+    const Node* getAdjNode2() const{
+        return adjacentNodes_[1];
+    }
+
+private:
+    int weight_;
+    Node* adjacentNodes_[2];
 };

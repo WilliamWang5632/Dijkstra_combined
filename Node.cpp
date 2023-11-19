@@ -15,20 +15,20 @@ class Node{
 public:
     // default constructor
     Node(){
-        id = 0;  
-        x_position = 1;
-        y_position = 1;
-        is_available = true;
+        id_ = 0;  
+        x_position_ = 1;
+        y_position_ = 1;
+        is_available_ = true;
     }
 
     /** Node constructor with 1 parameter
     @param identifier identifier of Node instance
     */
     Node(int identifier){
-        x_position = identifier - NODES_PER_ROW * (identifier / NODES_PER_ROW ) + 1;
-        y_position = (identifier / NODES_PER_ROW ) + 1;
-        is_available = true;
-        id = identifier;
+        x_position_ = identifier - NODES_PER_ROW * (identifier / NODES_PER_ROW ) + 1;
+        y_position_ = (identifier / NODES_PER_ROW ) + 1;
+        is_available_ = true;
+        id_ = identifier;
     }
 
     /** Node constructor with 2 parameters
@@ -36,29 +36,53 @@ public:
     @param y y coordinate of Node instance
     */
     Node(int x, int y){
-        x_position = x;
-        y_position = y;
-        is_available = true;
-        id = NODES_PER_ROW  * (y - 1) + x - 1;
+        x_position_ = x;
+        y_position_ = y;
+        is_available_ = true;
+        id_ = NODES_PER_ROW  * (y - 1) + x - 1;
     }
 
     // prints node coordinates 
     void printCoordinates(){
-        cout << "(" << x_position << ", " << y_position << ")";
+        cout << "(" << x_position_ << ", " << y_position_ << ")";
     }
 
     /*
     prints Node id, x coordinate and y coordinate
     */
     void printInfo(){
-        cout << "id: " << id << endl;
+        cout << "id: " << id_ << endl;
         printCoordinates();
         cout << endl;
     }
+
+    Node& operator=(const Node& other) {
+        if (this != &other) {  // Check for self-assignment
+            id_ = other.id_;
+            x_position_ = other.x_position_;
+            y_position_ = other.y_position_;
+            is_available_ = other.is_available_;
+        }
+        return *this;
+    }
+
+    //getters
+    const int getId() const{
+        return id_;
+    }
+
+    const int getX() const{
+        return x_position_;
+    }
     
-    int id;  
-    int x_position;
-    int y_position;
-    bool is_available;
+    const int getY() const{
+        return y_position_;
+    }
+
+private:
+    int id_;  
+    int x_position_;
+    int y_position_;
+    bool is_available_;
 
 };

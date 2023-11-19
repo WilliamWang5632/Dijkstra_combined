@@ -20,8 +20,8 @@ const int INF = 255; // very large number representing infinity
 
 Path computeDijkstra(Graph playground, Node& start, Node& end) {
 
-    int** adjacencyMatrix = playground.adjacencyMatrix;
-    int nNodes = playground.nNodes;
+    int** adjacencyMatrix = playground.getAdjacencyMatrix();
+    int nNodes = playground.getNumNodes();
 
     // Initialize distanceArr and visitedArr arrays
     int* distanceArr = new int[nNodes];
@@ -35,7 +35,7 @@ Path computeDijkstra(Graph playground, Node& start, Node& end) {
     }
 
     // distance from start to itself is 0 
-    distanceArr[start.id] = 0;
+    distanceArr[start.getId()] = 0;
 
     // Dijkstra's algorithm
     for (int i = 0; i < nNodes-1; i++) {
@@ -62,7 +62,7 @@ Path computeDijkstra(Graph playground, Node& start, Node& end) {
 
     int* path = new int[nNodes];
     int pathLength = 0;
-    int current = end.id;
+    int current = end.getId();
 
     while (current != -1){
         pathLength++;
@@ -80,9 +80,9 @@ Path computeDijkstra(Graph playground, Node& start, Node& end) {
     }
 
     Path minimumCostPath = Path(start, playground);
-    minimumCostPath.nNodes = pathLength;
-    minimumCostPath.totalCost = distanceArr[end.id];
-    minimumCostPath.current = end;
+    minimumCostPath.setNumNodes(pathLength);
+    minimumCostPath.setTotalCost(distanceArr[end.getId()]);
+    minimumCostPath.setCurrentNode(end);
 
     Node finalNodeArray[pathLength];
     for (int i = 0; i < pathLength; i++){
@@ -92,7 +92,8 @@ Path computeDijkstra(Graph playground, Node& start, Node& end) {
     }
     
     for (int i = 0; i < pathLength; i++){
-        minimumCostPath.nodeArray[i] = finalNodeArray[i];
+
+        minimumCostPath.setNodeArrayElem(i, finalNodeArray[i]);
     }
     
     return minimumCostPath;

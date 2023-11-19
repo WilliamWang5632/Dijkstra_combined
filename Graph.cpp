@@ -15,14 +15,14 @@ public:
     // graph with a single node with no edges
     // initialize empty adjacency matrix
     Graph(){
-        nEdges = 0;
-        nNodes = 1;
-        adjacencyMatrix = new int*[nNodes];
-        for (int i = 0; i < nNodes; ++i) {
-            adjacencyMatrix[i] = new int[nNodes];
+        nEdges_ = 0;
+        nNodes_ = 1;
+        adjacencyMatrix_ = new int*[nNodes_];
+        for (int i = 0; i < nNodes_; ++i) {
+            adjacencyMatrix_[i] = new int[nNodes_];
             // Initialize the matrix with -1
-            for (int j = 0; j < nNodes; ++j) {
-                adjacencyMatrix[i][j] = -1;
+            for (int j = 0; j < nNodes_; ++j) {
+                adjacencyMatrix_[i][j] = -1;
             }
         }
     }
@@ -34,14 +34,14 @@ public:
     */
     Graph(int nNodesP){
         // Creates matrix
-        nEdges = 0;
-        nNodes = nNodesP;
-        adjacencyMatrix = new int*[nNodesP];
+        nEdges_ = 0;
+        nNodes_ = nNodesP;
+        adjacencyMatrix_ = new int*[nNodesP];
         for (int i = 0; i < nNodesP; i++) {
-            adjacencyMatrix[i] = new int[nNodesP];
+            adjacencyMatrix_[i] = new int[nNodesP];
             // Initialize the adjacency matrix with -1
             for (int j = 0; j < nNodesP; j++) {
-                adjacencyMatrix[i][j] = -1;
+                adjacencyMatrix_[i][j] = -1;
             }
         }
     }
@@ -53,12 +53,12 @@ public:
     void addEdge(Edge& edge) {
         // Add an edge between vertex1 and vertex2
         // Assumes an undirected graph
-        int node1id = edge.adjacentNodes[0]->id;
-        int node2id = edge.adjacentNodes[1]->id;
+        int node1id = edge.getAdjNode1()->getId();
+        int node2id = edge.getAdjNode2()->getId();
         
-        adjacencyMatrix[node1id][node2id] = edge.weight;
-        adjacencyMatrix[node2id][node1id] = edge.weight;
-        nEdges++;
+        adjacencyMatrix_[node1id][node2id] = edge.getWeight();
+        adjacencyMatrix_[node2id][node1id] = edge.getWeight();
+        nEdges_++;
     }
 
     /**
@@ -67,10 +67,10 @@ public:
     void displayMatrix() {
         cout << "adjacency matrix: " << endl;
 
-        for (int i = 0; i < nNodes; ++i) {
+        for (int i = 0; i < nNodes_; ++i) {
             cout << "Node " << i << ": ";
-            for (int j = 0; j < nNodes; ++j) {
-                cout << adjacencyMatrix[i][j] << " ";
+            for (int j = 0; j < nNodes_; ++j) {
+                cout << adjacencyMatrix_[i][j] << " ";
             }
             cout << endl;
         }
@@ -82,10 +82,10 @@ public:
     void displayList() {
         // Display the adjacency list
         cout << "adjacency list" << endl;
-        for (int i = 0; i < nNodes; ++i) {
+        for (int i = 0; i < nNodes_; ++i) {
             cout << "Node " << i << ": ";
-            for (int j = 0; j < nNodes; ++j) {
-                if (adjacencyMatrix[i][j] > 0) {
+            for (int j = 0; j < nNodes_; ++j) {
+                if (adjacencyMatrix_[i][j] > 0) {
                     cout << j << " ";
                 }
             }
@@ -100,18 +100,29 @@ public:
      @param node node that will be removed from graph
      */
     void removeNode(Node& node){
-        int id = node.id;
-        for (int i = 0; i < nNodes; i++){
-            adjacencyMatrix[id][i] = -1;
-            adjacencyMatrix[i][id] = -1;
+        int id = node.getId();
+        for (int i = 0; i < nNodes_; i++){
+            adjacencyMatrix_[id][i] = -1;
+            adjacencyMatrix_[i][id] = -1;
         }
     }
 
     ~Graph(){}
 
-    int nNodes;
-    int nEdges;
-    int** adjacencyMatrix;
+    // getters
+
+    const int getNumNodes() const{
+        return nNodes_;
+    }
+
+    int** getAdjacencyMatrix() const{
+        return adjacencyMatrix_;
+    }
+
+private:
+    int nNodes_;
+    int nEdges_;
+    int** adjacencyMatrix_;
 };
 
 

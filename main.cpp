@@ -13,8 +13,8 @@
 
 using namespace std;
 
-const int START_ID = 25; // starting node
-const int END_ID = 14;  // ending node
+const int START_ID = 27; // starting node
+const int END_ID = 0;  // ending node
 
 const int BLOCKED_ID = 10; // blocked node if there is any
 
@@ -52,11 +52,11 @@ int main()
 
     cout << endl;
 
-    cout << "After removing node: " << endl;
-    //playground.displayList();
+    //cout << "After removing node: " << endl;
+    playground.displayList();
     cout << endl;
 
-    int nNodes = playground.nNodes;
+    int nNodes = playground.getNumNodes();
 
     cout << separationLine << endl;
     // DIJKSTRA'S ALGORITHM
@@ -72,7 +72,9 @@ int main()
 
     minimumCostPath.printPath(true);
     cout << separationLine << endl;
-    //minimumCostPath.printPath(false);
+    minimumCostPath.printPath(false);
+
+
 
     minimumCostPath.findDirections();            // must call findDirections before findVehicleInstructions
     //minimumCostPath.findVehicleInstructions();   // cannot be called in computeDijkstra
