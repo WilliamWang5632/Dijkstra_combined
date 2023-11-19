@@ -79,8 +79,8 @@ Path computeDijkstra(Graph playground, Node& start, Node& end) {
         }
     }
 
-    Path minimumCostPath = Path(start, playground);
-    minimumCostPath.setNumNodes(pathLength);
+    Path minimumCostPath = Path(start, playground, pathLength);
+
     minimumCostPath.setTotalCost(distanceArr[end.getId()]);
     minimumCostPath.setCurrentNode(end);
 

@@ -22,12 +22,12 @@ public:
         totalCost_ = 0;
         nNodes_ = 1;
 
-        nodeArray_ = new Node[1];
+        nodeArray_ = new Node[nNodes_];
         nodeArray_[0] = Node(1,1);
 
         directionsInt_ = new int[nNodes_ - 1];
         directions_ = new char[nNodes_ - 1];
-        vehicleInstructions_ = new char[nNodes_];
+        vehicleInstructions_ = new char[nNodes_];             
     }
 
     /**
@@ -35,14 +35,14 @@ public:
      @param startingPoint starting node
      @param graph graph that the path will take place in
      */
-    Path(Node& startingPoint, Graph& graph){
+    Path(Node& startingPoint, Graph& graph, int nNodes){
         start_ = startingPoint;
         current_ = startingPoint;
         playground_ = graph;
         totalCost_ = 0;
-        nNodes_ = 1;
+        nNodes_ = nNodes;
 
-        nodeArray_ = new Node[1];
+        nodeArray_ = new Node[nNodes_];
         nodeArray_[0] = startingPoint;
 
         directionsInt_ = new int[nNodes_ - 1];
@@ -50,7 +50,9 @@ public:
         vehicleInstructions_ = new char[nNodes_];
     }
 
-    // print the ids of all nodes in path in order as well as the totalCost
+    // print information of all nodes in path in order as well as the totalCost
+    // isId == false : print coordinates
+    // isId == true  : print ids
     void printPath(bool isId){
         if (isId){
             cout << "The shortest path between node " << start_.getId();
@@ -93,41 +95,43 @@ public:
     // 'W' : West : 3
     
     void findDirections(){
+
         for (int i = 1; i < nNodes_; i++){
 
             int previous = nodeArray_[i - 1].getId();
             int current = nodeArray_[i].getId();
-
-            cout << previous << " " << current << " ";
-
+            
             if (previous - current == -1){
                 directions_[i - 1] = 'E';   // 'E' : East : 1
                 directionsInt_[i - 1] = 1;
 
-                //cout << "East -> ";
+                cout << "East -> ";
             }
+
             else if (previous - current == 1){
                 directions_[i - 1] = 'W';   // 'W' : West : 3
                 directionsInt_[i - 1] = 3;
-                //cout << "West -> ";
+
+                cout << "West -> ";
             }
             else if (previous - current == -7){
                 directions_[i - 1] = 'S';   // 'S' : South: 2
                 directionsInt_[i - 1] = 2;
-                //cout << "South -> ";
+
+                cout << "South -> ";
             }
             else if (previous - current == 7){
                 directions_[i - 1] = 'N';   // 'N' : North: 0
                 directionsInt_[i - 1] = 0;
-                //cout << "North -> ";
+
+                cout << "North -> ";
             }
             else{
                 directions_[i - 1] = 'X';   // 'X' : direction not found : -1
                 directionsInt_[i - 1] = -1;
             }
-            cout << directions_[i - 1] << endl;
         }
-        //cout << "end" << endl;
+        cout << "end" << endl;
     }
 
 
@@ -135,6 +139,9 @@ public:
 
     // approach: subtract previous direction integer from current direction integer 
     // and separate into different cases
+
+    // 'N', 'E', 'S', 'W' : first character of vehicleInstructions:  
+    // initial direction and move forwards 1 edge
 
     // 'f' :  move forwards 1 edge
     // 'b' :  turn 180 degrees and move forwards 1 edge
@@ -151,49 +158,50 @@ public:
         for (int i = 1; i < nNodes_; i++){
             int difference = directionsInt_[i] - directionsInt_[i - 1];
             if (difference == 0){
-                vehicleInstructions_[i] = 'f'; // move forwards 1 edge
+                vehicleInstructions_[i] = 'f';
 
-                cout << "move forwards" << endl;
+                cout << "move forwards 1 edge" << endl;
             }
             else if (difference == 2 || difference == -2){
-                vehicleInstructions_[i] = 'b'; // turn 180 degrees and move forwards 1 edge
+                vehicleInstructions_[i] = 'b'; 
 
-                cout << "turn 180 degrees and move forwards" << endl;
+                cout << "turn 180 degrees and move forwards 1 edge" << endl;
             }
             else if (difference == -3 || difference == 1){
-                vehicleInstructions_[i] = 'r'; // turn right (90 deg clockwise) and move forwards 1 edge
+                vehicleInstructions_[i] = 'r';
 
-                cout << "turn right and move forwards" << endl;
+                cout << "turn right and move forwards 1 edge" << endl;
             }
             else if (difference == 3 || difference == -1){
-                vehicleInstructions_[i] = 'l'; // turn left (90 deg counter clockwise) and move forwards 1 edge
+                vehicleInstructions_[i] = 'l';
 
-                cout << "turn left and move forwards" << endl;
+                cout << "turn left and move forwards 1 edge" << endl;
             }
             else{
                 vehicleInstructions_[i] = 'x';
 
-                cout << "instruction not found" << endl;
+                cout << "instruction not found 1 edge" << endl;
             }
         }
-        vehicleInstructions_[nNodes_ - 1] = 's';
+        vehicleInstructions_[nNodes_-1] = 's';
 
         cout << "arrived at destination, stop" << endl;
+
+        for (int j = 0; j < nNodes_; j++){
+            cout << vehicleInstructions_[j] << " -> ";
+        }
+        cout << "end" << endl;
     }
     
     ~Path() {
-        // delete[] nodeArray;
-        // delete[] directions;
-        // delete[] directionsInt;
-        // delete[] vehicleInstructions; 
+        // delete[] nodeArray_;
+        // delete[] directions_;
+        // delete[] directionsInt_;
+        // delete[] vehicleInstructions_; 
     }
 
 
     // setters
-
-    void setNumNodes(int nNodes){
-        nNodes_ = nNodes;
-    }
 
     void setTotalCost(int totalCost){
         totalCost_ = totalCost;

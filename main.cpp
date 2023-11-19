@@ -13,8 +13,8 @@
 
 using namespace std;
 
-const int START_ID = 27; // starting node
-const int END_ID = 0;  // ending node
+const int START_ID = 3; // starting node
+const int END_ID = 4;  // ending node
 
 const int BLOCKED_ID = 10; // blocked node if there is any
 
@@ -37,18 +37,22 @@ int main()
     //playground.displayList();
 
     // instanciate removed node
-    //Node blocked = Node(BLOCKED_ID);
+    Node blocked = Node(BLOCKED_ID);
 
     Node n9 = Node(9);
+    Node n10 = Node(10);
     Node n12 = Node(12);
-    Node n16 = Node(16);
+    Node n19 = Node(19);
+    Node n24 = Node(24);
 
     // removing some nodes from the playground
     //playground.removeNode(blocked);
 
-    //playground.removeNode(n9);
-    //playground.removeNode(n12);
-    //playground.removeNode(n16);
+    playground.removeNode(n9);
+    playground.removeNode(n10);
+    playground.removeNode(n12);
+    playground.removeNode(n19);
+    playground.removeNode(n24);
 
     cout << endl;
 
@@ -74,10 +78,9 @@ int main()
     cout << separationLine << endl;
     minimumCostPath.printPath(false);
 
-
-
-    minimumCostPath.findDirections();            // must call findDirections before findVehicleInstructions
-    //minimumCostPath.findVehicleInstructions();   // cannot be called in computeDijkstra
+    minimumCostPath.findDirections();            // create array of cardinal directions
+    cout << separationLine << endl;
+    minimumCostPath.findVehicleInstructions();   // create array of vehicle instructions
 
 }
 
