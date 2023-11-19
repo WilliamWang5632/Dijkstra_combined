@@ -13,8 +13,8 @@
 
 using namespace std;
 
-const int START_ID = 0; // starting node
-const int END_ID = 27;  // ending node
+const int START_ID = 25; // starting node
+const int END_ID = 14;  // ending node
 
 const int BLOCKED_ID = 10; // blocked node if there is any
 
@@ -29,24 +29,31 @@ int main()
     // playground of final test
     Graph playground = createPlayground();
 
-    playground.displayMatrix();
+    //playground.displayMatrix();
     cout << endl;
 
     cout << endl;
     cout << "Before removing node: " << endl;
-    playground.displayList();
+    //playground.displayList();
 
     // instanciate removed node
-    Node blocked = Node(BLOCKED_ID);
+    //Node blocked = Node(BLOCKED_ID);
 
+    Node n9 = Node(9);
+    Node n12 = Node(12);
+    Node n16 = Node(16);
 
     // removing some nodes from the playground
-    playground.removeNode(blocked);
+    //playground.removeNode(blocked);
+
+    //playground.removeNode(n9);
+    //playground.removeNode(n12);
+    //playground.removeNode(n16);
 
     cout << endl;
 
     cout << "After removing node: " << endl;
-    playground.displayList();
+    //playground.displayList();
     cout << endl;
 
     int nNodes = playground.nNodes;
@@ -65,9 +72,10 @@ int main()
 
     minimumCostPath.printPath(true);
     cout << separationLine << endl;
-    minimumCostPath.printPath(false);
+    //minimumCostPath.printPath(false);
 
-    minimumCostPath.findDirections();
+    minimumCostPath.findDirections();            // must call findDirections before findVehicleInstructions
+    //minimumCostPath.findVehicleInstructions();   // cannot be called in computeDijkstra
 
 }
 
