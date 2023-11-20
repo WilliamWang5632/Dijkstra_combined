@@ -70,7 +70,7 @@ int main(){
     r.displayList();
 
     Path minimumCostPath = computeDijkstra(r, n11, n33);
-    minimumCostPath.print(false);
+    minimumCostPath.printPath(false);
 
 
 }

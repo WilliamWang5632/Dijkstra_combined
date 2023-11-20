@@ -15,7 +15,7 @@ const int INF = 255; // very large number representing infinity
     @param nNodes number of nodes inside of graph
     @param start starting node
     @param end ending node
-    @return class Path representing the shortest path between two nodes
+    @return minimumCostPath class Path representing the shortest path between two nodes
 */
 
 Path computeDijkstra(Graph playground, Node& start, Node& end) {

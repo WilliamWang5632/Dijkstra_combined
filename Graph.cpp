@@ -76,9 +76,8 @@ public:
         }
     }
     
-    /**
-     * displays adjacency list
-     */
+    
+    //displays adjacency list
     void displayList() {
         // Display the adjacency list
         cout << "adjacency list" << endl;
@@ -117,6 +116,12 @@ public:
 
     int** getAdjacencyMatrix() const{
         return adjacencyMatrix_;
+    }
+
+    // setters
+
+    void resetMatrix(int** originalMatrix){
+        adjacencyMatrix_ = originalMatrix;
     }
 
 private:

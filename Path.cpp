@@ -11,6 +11,7 @@ using namespace std;
 
 // example of instanciation
 // Path path1 = Path(n11, graph1);
+// Path path2 = Path(n0, graph1)
 class Path{
 public:
     // default constructor
@@ -34,6 +35,7 @@ public:
      * constructor with parameters
      @param startingPoint starting node
      @param graph graph that the path will take place in
+     @param nNodes number of nodes in path
      */
     Path(Node& startingPoint, Graph& graph, int nNodes){
         start_ = startingPoint;
@@ -135,7 +137,7 @@ public:
     }
 
 
-    // convert array of cardinal directions into instructions given to vehicle
+    // convert array of cardinal directions into instructions given to vehicle (lowercase)
 
     // approach: subtract previous direction integer from current direction integer 
     // and separate into different cases
@@ -200,6 +202,15 @@ public:
         // delete[] vehicleInstructions_; 
     }
 
+    // getters
+
+    const Node getCurrentNode() const{
+        return current_;
+    }
+
+    const char getCurrentDirection() const{
+        return directions_[nNodes_ - 2];
+    }
 
     // setters
 
@@ -214,7 +225,6 @@ public:
     void setNodeArrayElem(int index, Node& node){
         nodeArray_[index] = node;
     }
-
 
 private:
     int nNodes_;

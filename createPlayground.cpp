@@ -13,7 +13,7 @@ const int NUM_NODES_IN_GRAPH = 28;
 
 const int BLACK = 1;
 const int YELLOW = 2;
-const int RED = 3;
+const int RED = 5;
 
 
 Graph createPlayground(){

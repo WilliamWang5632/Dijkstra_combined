@@ -44,7 +44,7 @@ public:
 
     // prints node coordinates 
     void printCoordinates(){
-        cout << "(" << x_position_ << ", " << y_position_ << ")";
+        cout << "(" << y_position_ << ", " << x_position_ << ")";
     }
 
     /*
@@ -56,6 +56,11 @@ public:
         cout << endl;
     }
 
+    /**
+     *  assignment/copy constructor
+     @param other rvalue other node that we want to assign to lvalue node
+     @return *this instance of Node object
+    */ 
     Node& operator=(const Node& other) {
         if (this != &other) {  // Check for self-assignment
             id_ = other.id_;
