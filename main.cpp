@@ -1,6 +1,3 @@
-// questions: plusieurs poteaux possibles?
-// peuvent-ils enlever des poteaux
-
 #include <iostream>
 #include "Node.cpp"
 #include "Edge.cpp"
@@ -8,17 +5,21 @@
 #include "Path.cpp"
 #include "createPlayground.cpp"
 #include "Dijkstra.cpp"
+#include "travel.cpp"
 
-//#include "memoryDebug.cpp"
+#include "memoryDebug.cpp"
 
 using namespace std;
 
-const int START_ID = 0; // starting node
-const int END_ID = 27;  // ending node
+const int START = 0; // starting node
+const int BLOCKED_1 = 11;
 
-const int BLOCKED_ID = 10; // blocked node if there is any
+const int FIRST_INTERVAL = 6;
+const int BLOCKED_2 = 2;
 
-
+const int SECOND_INTERVAL = 21;
+const int BLOCKED_3 = 16;
+const int END = 27;  // ending node
 
 int main()
 {
@@ -30,83 +31,40 @@ int main()
 
     // playground of final test
     Graph playground = createPlayground();
-    int** originalMatrix = playground.getAdjacencyMatrix();
+    int** originalMatrix = playground.getAdjacencyMatrixCopy();
 
     //playground.displayMatrix();
     //cout << endl;
 
-    //cout << endl;
-    //cout << "Before removing node: " << endl;
     //playground.displayList();
-
-    // instanciate removed node
-    //Node blocked = Node(BLOCKED_ID);
-
-    // removing some nodes from the playground
-    //playground.removeNode(blocked);
-
-    // reset adjacency matrix (reinstate removed node)
-    //playground.resetMatrix(originalMatrix);
-
-    //cout << endl;
-
-    //cout << "After removing node: " << endl;
-    //playground.displayList();
-    //cout << endl;
-
-    int nNodes = playground.getNumNodes();
 
     //cout << separationLine << endl;
     // DIJKSTRA'S ALGORITHM
 
-    // instanciate start and end node
-    Node start = Node(START_ID);
-    Node end = Node(END_ID);
+    cout << "first journey: " << endl << endl;
 
-    Path initialPath = computeDijkstra(playground, start, end);
-    Path detourPath; // if there is any
+    Node start = Node(START);
+    Node interval_1 = Node(FIRST_INTERVAL);
+    Node blocked_1 = Node(BLOCKED_1);
+    travel(playground, start, interval_1, blocked_1);
 
-    Node currentNode = Node(START_ID);
+    cout << separationLine << endl;
 
+    cout << "second journey: " << endl << endl;
+    playground.resetMatrix(originalMatrix);
 
-    int initialPathLen = 0;
-    bool detour = false;
-    for (int i = 0; i < initialPath.getNumNodes(); i++){
+    Node interval_2 = Node(SECOND_INTERVAL);
+    Node blocked_2 = Node(BLOCKED_2);
+    travel(playground, interval_1, interval_2, blocked_2);
 
-        currentNode = initialPath.getNthNode(i);
-        Node nextNode = initialPath.getNthNode(i + 1);
-        initialPathLen++;
+    cout << separationLine << endl;
 
-        if (nextNode.getId() == BLOCKED_ID){
+    cout << "third journey: " << endl << endl;
 
-            initialPath = computeDijkstra(playground, start, nextNode); // cut short initial path
-
-            playground.removeNode(nextNode);
-
-            detour = true;
-            break;
-        }
-    }
-    cout << endl;
-
-    Path finalPath;
-
-    if (detour){
-        detourPath = computeDijkstra(playground, currentNode, end);
-        for (int i = 0; i < detourPath.getNumNodes(); i++){
-            currentNode = detourPath.getNthNode(i);
-        }
-        finalPath = initialPath + detourPath;
-    }
-    else{
-        finalPath = initialPath;
-    }
-
-    finalPath.findInstructions();
-
-    finalPath.printPath(true);
-    finalPath.printDirections();
-
+    playground.resetMatrix(originalMatrix);
+    Node end = Node(END);
+    Node blocked_3 = Node(BLOCKED_3);
+    travel(playground, interval_2, end, blocked_3);
 
 }
 

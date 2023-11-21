@@ -76,7 +76,6 @@ public:
         }
     }
     
-    
     //displays adjacency list
     void displayList() {
         // Display the adjacency list
@@ -114,8 +113,22 @@ public:
         return nNodes_;
     }
 
-    int** getAdjacencyMatrix() const{
-        return adjacencyMatrix_;
+    // important to obtain deep copy of shallow matrix
+    // in order to reset a modified matrix to the original
+    int** getAdjacencyMatrixCopy() const{
+        int** matrixCopy = new int*[nNodes_];
+        for (int i = 0; i < nNodes_; ++i) {
+            matrixCopy[i] = new int[nNodes_];
+        }
+
+        // Copy values from the original matrix to the new matrix
+        for (int i = 0; i < nNodes_; ++i) {
+            for (int j = 0; j < nNodes_; ++j) {
+                matrixCopy[i][j] = adjacencyMatrix_[i][j];
+            }
+        }
+
+        return matrixCopy;
     }
 
     // setters

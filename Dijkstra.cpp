@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "Node.cpp"
 #include "Edge.cpp"
@@ -7,7 +8,7 @@
 
 using namespace std;
 
-const int INF = 127; // very large number representing infinity
+const int INF = 255; // very large number representing infinity
 
 /**
  *  this function computes the shortest path between a starting and ending node in a graph
@@ -20,7 +21,7 @@ const int INF = 127; // very large number representing infinity
 
 Path computeDijkstra(Graph playground, Node& start, Node& end) {
 
-    int** adjacencyMatrix = playground.getAdjacencyMatrix();
+    int** adjacencyMatrix = playground.getAdjacencyMatrixCopy();
     int nNodes = playground.getNumNodes();
 
     // Initialize distanceArr and visitedArr arrays
