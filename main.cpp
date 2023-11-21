@@ -14,12 +14,12 @@ using namespace std;
 const int START = 0; // starting node
 const int BLOCKED_1 = 11;
 
-const int FIRST_INTERVAL = 6;
-const int BLOCKED_2 = 2;
+const int FIRST_INTERVAL = 27;
+// const int BLOCKED_2 = 2;
 
-const int SECOND_INTERVAL = 21;
-const int BLOCKED_3 = 16;
-const int END = 27;  // ending node
+// const int SECOND_INTERVAL = 21;
+// const int BLOCKED_3 = 16;
+// const int END = 27;  // ending node
 
 int main()
 {
@@ -41,30 +41,55 @@ int main()
     //cout << separationLine << endl;
     // DIJKSTRA'S ALGORITHM
 
-    cout << "first journey: " << endl << endl;
+    //cout << "first journey: " << endl << endl;
 
     Node start = Node(START);
     Node interval_1 = Node(FIRST_INTERVAL);
     Node blocked_1 = Node(BLOCKED_1);
-    travel(playground, start, interval_1, blocked_1);
+
+
+    // implementation where there is one combined path
+
+    Path finalPath = travel(playground, start, interval_1, blocked_1);
+
+    finalPath.printPath(true); // true -> id, false -> coordonees
+    finalPath.printDirections();
+
+
+    playground.resetMatrix(originalMatrix);
+    cout << separationLine << endl;
+
+    // implementation where there are two seperate paths
+    // one before pole detection, one after
+
+    DoublePath doublePath = travelSeparated(playground, start, interval_1, blocked_1);
+
+    doublePath.initial.printPath(true);
+    doublePath.initial.printDirections();
+    cout << "pole detected" << endl;
+    cout << endl;
+    doublePath.detour.printPath(true);
+    doublePath.detour.printDirections();
 
     cout << separationLine << endl;
 
-    cout << "second journey: " << endl << endl;
-    playground.resetMatrix(originalMatrix);
+    // cout << "second journey: " << endl << endl;
+    // playground.resetMatrix(originalMatrix);
 
-    Node interval_2 = Node(SECOND_INTERVAL);
-    Node blocked_2 = Node(BLOCKED_2);
-    travel(playground, interval_1, interval_2, blocked_2);
+    // Node interval_2 = Node(SECOND_INTERVAL);
+    // Node blocked_2 = Node(BLOCKED_2);
+    // travel(playground, interval_1, interval_2, blocked_2);
 
-    cout << separationLine << endl;
+    // cout << separationLine << endl;
 
-    cout << "third journey: " << endl << endl;
+    // cout << "third journey: " << endl << endl;
 
-    playground.resetMatrix(originalMatrix);
-    Node end = Node(END);
-    Node blocked_3 = Node(BLOCKED_3);
-    travel(playground, interval_2, end, blocked_3);
+    // playground.resetMatrix(originalMatrix);
+    // Node end = Node(END);
+    // Node blocked_3 = Node(BLOCKED_3);
+    // travel(playground, interval_2, end, blocked_3);
+
+    char* allInstructions = finalPath.getAllInstructions();
 
 }
 

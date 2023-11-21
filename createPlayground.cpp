@@ -122,7 +122,7 @@ Graph createPlayground(){
     //e12_13.printInfo();
     Graph playground = Graph(NUM_NODES_IN_GRAPH);
     
-    PrintMemoryUsage();
+    //PrintMemoryUsage();
     
     // adding edges to playground
     

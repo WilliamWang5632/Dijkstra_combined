@@ -9,6 +9,28 @@
 
 using namespace std;
 
+
+char directionToInstruction(int before, int after){
+    char instruction;
+    int difference = after - before;
+   if (difference == 0){
+        instruction = 'f';
+    }
+    else if (difference == 2 || difference == -2){
+        instruction = 'b'; 
+    }
+    else if (difference == -3 || difference == 1){
+        instruction = 'r';
+    }
+    else if (difference == 3 || difference == -1){
+        instruction = 'l';
+    }
+    else{
+        instruction = 'x';
+    }
+    return instruction;
+}
+
 /**
  * concatenate the type T elements of two arrays in order to return a separate larger array
  * put outside class to lighten Path class 
@@ -132,39 +154,13 @@ public:
         's' :  arrived at destination, stop
     */
     void findVehicleInstructions(){
-        //vehicleInstructions_[0] = directions_[0];
+        vehicleInstructions_[0] = directions_[0];
 
-        vehicleInstructions_[0] = 'f'; // assumes vehicle is in the right direction
-
-        //cout << "face " << vehicleInstructions_[0] << " and move forwards" << endl;
+        //vehicleInstructions_[0] = 'f'; // assumes vehicle is in the right direction
 
         for (int i = 1; i < nNodes_; i++){
-            int difference = directionsInt_[i] - directionsInt_[i - 1];
-            if (difference == 0){
-                vehicleInstructions_[i] = 'f';
-
-                //cout << "move forwards 1 edge" << endl;
-            }
-            else if (difference == 2 || difference == -2){
-                vehicleInstructions_[i] = 'b'; 
-
-                //cout << "turn 180 degrees and move forwards 1 edge" << endl;
-            }
-            else if (difference == -3 || difference == 1){
-                vehicleInstructions_[i] = 'r';
-
-                //cout << "turn right and move forwards 1 edge" << endl;
-            }
-            else if (difference == 3 || difference == -1){
-                vehicleInstructions_[i] = 'l';
-
-                //cout << "turn left and move forwards 1 edge" << endl;
-            }
-            else{
-                vehicleInstructions_[i] = 'x';
-
-                //cout << "instruction not found 1 edge" << endl;
-            }
+            vehicleInstructions_[i] = 
+            directionToInstruction(directionsInt_[i - 1], directionsInt_[i]);
         }
         vehicleInstructions_[nNodes_- 1] = 's';
 
@@ -245,17 +241,17 @@ public:
         cout << endl;
         //cout << "There are " << nNodes_ - 1 << " edges in this path" << endl;
         //cout << endl;
-        cout << "Total cost of this path: " << totalCost_ << endl;
-        cout << endl;
+        // cout << "Total cost of this path: " << totalCost_ << endl;
+        // cout << endl;
     }
 
     // print information on the directions and instructions for the vehicle
     void printDirections(){
-        for (int i = 0; i < nNodes_ - 1; i++){
-            cout << directions_[i] << " -> ";
-        }
-        cout << "end" << endl;
-        cout << endl;
+        // for (int i = 0; i < nNodes_ - 1; i++){
+        //     cout << directions_[i] << " -> ";
+        // }
+        // cout << "end" << endl;
+        // cout << endl;
         for (int i = 0; i < nNodes_; i++){
             cout << vehicleInstructions_[i] << " -> ";
         }
@@ -276,6 +272,14 @@ public:
         return directions_[index];
     }
 
+    const int getCurrentDirectionInt(int index) const{
+        return directionsInt_[index];
+    }
+
+    char* getAllInstructions() const{
+        return vehicleInstructions_;
+    }
+
     // setters
 
     void setTotalCost(int totalCost){
@@ -284,6 +288,10 @@ public:
 
     void setNodeArrayElem(int index, Node& node){
         nodeArray_[index] = node;
+    }
+
+    void setInstructionsIndex(int index, char& instruction){
+        vehicleInstructions_[index] = instruction;
     }
 
 private:
