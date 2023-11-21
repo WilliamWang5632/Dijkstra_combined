@@ -9,7 +9,7 @@
 #include "createPlayground.cpp"
 #include "Dijkstra.cpp"
 
-#include "memoryDebug.cpp"
+//#include "memoryDebug.cpp"
 
 using namespace std;
 
@@ -18,28 +18,6 @@ const int END_ID = 27;  // ending node
 
 const int BLOCKED_ID = 10; // blocked node if there is any
 
-
-//temp
-
-Path travel(Graph playground, Node& start, Node& end){
-    Path minimumCostPath = computeDijkstra(playground, start, end);
-
-    minimumCostPath.printPath(true);
-    cout << endl;
-    minimumCostPath.printPath(false);
-
-    minimumCostPath.findDirections();            // create array of cardinal directions
-    cout << endl;
-    minimumCostPath.findVehicleInstructions();   // create array of vehicle instructions
-
-    int currentId = minimumCostPath.getCurrentNode().getId();
-    char currentDirection = minimumCostPath.getCurrentDirection();
-
-    cout << "We are currently at node " << currentId << " facing the ";
-    cout << currentDirection << " direction" << endl;
-
-    return minimumCostPath;
-}
 
 
 int main()
@@ -54,27 +32,27 @@ int main()
     Graph playground = createPlayground();
     int** originalMatrix = playground.getAdjacencyMatrix();
 
-    playground.displayMatrix();
-    cout << endl;
+    //playground.displayMatrix();
+    //cout << endl;
 
-    cout << endl;
-    cout << "Before removing node: " << endl;
-    playground.displayList();
+    //cout << endl;
+    //cout << "Before removing node: " << endl;
+    //playground.displayList();
 
     // instanciate removed node
-    Node blocked = Node(BLOCKED_ID);
+    //Node blocked = Node(BLOCKED_ID);
 
     // removing some nodes from the playground
-    playground.removeNode(blocked);
+    //playground.removeNode(blocked);
 
     // reset adjacency matrix (reinstate removed node)
-    playground.resetMatrix(originalMatrix);
+    //playground.resetMatrix(originalMatrix);
 
-    cout << endl;
+    //cout << endl;
 
-    cout << "After removing node: " << endl;
-    playground.displayList();
-    cout << endl;
+    //cout << "After removing node: " << endl;
+    //playground.displayList();
+    //cout << endl;
 
     int nNodes = playground.getNumNodes();
 
@@ -85,9 +63,50 @@ int main()
     Node start = Node(START_ID);
     Node end = Node(END_ID);
 
-    // print(true) -> identifier
-    // print(false) -> coordinates
-    Path minimumCostPath = travel(playground, start, end);
+    Path initialPath = computeDijkstra(playground, start, end);
+    Path detourPath; // if there is any
+
+    Node currentNode = Node(START_ID);
+
+
+    int initialPathLen = 0;
+    bool detour = false;
+    for (int i = 0; i < initialPath.getNumNodes(); i++){
+
+        currentNode = initialPath.getNthNode(i);
+        Node nextNode = initialPath.getNthNode(i + 1);
+        initialPathLen++;
+
+        if (nextNode.getId() == BLOCKED_ID){
+
+            initialPath = computeDijkstra(playground, start, nextNode); // cut short initial path
+
+            playground.removeNode(nextNode);
+
+            detour = true;
+            break;
+        }
+    }
+    cout << endl;
+
+    Path finalPath;
+
+    if (detour){
+        detourPath = computeDijkstra(playground, currentNode, end);
+        for (int i = 0; i < detourPath.getNumNodes(); i++){
+            currentNode = detourPath.getNthNode(i);
+        }
+        finalPath = initialPath + detourPath;
+    }
+    else{
+        finalPath = initialPath;
+    }
+
+    finalPath.findInstructions();
+
+    finalPath.printPath(true);
+    finalPath.printDirections();
+
 
 }
 

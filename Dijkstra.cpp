@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const int INF = 255; // very large number representing infinity
+const int INF = 127; // very large number representing infinity
 
 /**
  *  this function computes the shortest path between a starting and ending node in a graph
@@ -38,7 +38,7 @@ Path computeDijkstra(Graph playground, Node& start, Node& end) {
     distanceArr[start.getId()] = 0;
 
     // Dijkstra's algorithm
-    for (int i = 0; i < nNodes-1; i++) {
+    for (int i = 0; i < nNodes - 1; i++) {
         // Find the minimum distance node that hasn't been utilised yet
         int cur = -1;
         for (int j = 0; j < nNodes; j++) {
@@ -82,7 +82,6 @@ Path computeDijkstra(Graph playground, Node& start, Node& end) {
     Path minimumCostPath = Path(start, playground, pathLength);
 
     minimumCostPath.setTotalCost(distanceArr[end.getId()]);
-    minimumCostPath.setCurrentNode(end);
 
     Node finalNodeArray[pathLength];
     for (int i = 0; i < pathLength; i++){
