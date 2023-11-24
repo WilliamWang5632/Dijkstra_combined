@@ -13,7 +13,7 @@ using namespace std;
 char directionToInstruction(int before, int after){
     char instruction;
     int difference = after - before;
-   if (difference == 0){
+    if (difference == 0){
         instruction = 'f';
     }
     else if (difference == 2 || difference == -2){
@@ -146,6 +146,7 @@ public:
         approach: subtract previous direction integer from current direction integer 
         and separate into different cases
 
+        'i' :  ignore, no physical node detected ()
         'f' :  move forwards 1 edge
         'b' :  turn 180 degrees and move forwards 1 edge
         'r' :  turn right (90 deg clockwise) and move forwards 1 edge
@@ -159,8 +160,13 @@ public:
         //vehicleInstructions_[0] = 'f'; // assumes vehicle is in the right direction
 
         for (int i = 1; i < nNodes_; i++){
-            vehicleInstructions_[i] = 
-            directionToInstruction(directionsInt_[i - 1], directionsInt_[i]);
+            if(nodeArray_[i].getId() == 1 || nodeArray_[i].getId() == 19 || nodeArray_[i].getId() == 20 || nodeArray_[i].getId() == 22){
+                vehicleInstructions_[i] = 'i';
+            }
+            else{
+                vehicleInstructions_[i] = 
+                directionToInstruction(directionsInt_[i - 1], directionsInt_[i]);
+            }
         }
         vehicleInstructions_[nNodes_- 1] = 's';
 
@@ -248,10 +254,15 @@ public:
     // print information on the directions and instructions for the vehicle
     void printDirections(){
         // for (int i = 0; i < nNodes_ - 1; i++){
-        //     cout << directions_[i] << " -> ";
+        //     cout << directionsInt_[i] << " -> ";
         // }
         // cout << "end" << endl;
         // cout << endl;
+        for (int i = 0; i < nNodes_ - 1; i++){
+            cout << directions_[i] << " -> ";
+        }
+        cout << "end" << endl;
+        cout << endl;
         for (int i = 0; i < nNodes_; i++){
             cout << vehicleInstructions_[i] << " -> ";
         }
